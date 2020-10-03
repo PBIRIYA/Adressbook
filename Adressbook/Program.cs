@@ -1,179 +1,54 @@
 ﻿using System;
-
-
-
+using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
 namespace AddressBook
-
 {
-
-    public class contact
-
+    class AddressBookMain
     {
-
-        String FirstName;
-
-        String LastName;
-
-        String PhoneNumber;
-
-        String Address;
-
-        String zipCode;
-
-        String Email;
-
-
-
-        public contact(String FirstName, String LastName, String PhoneNumber, String Address, String zipCode, String Email)
-
-        {
-
-            this.FirstName = FirstName;
-
-            this.LastName = LastName;
-
-            this.PhoneNumber = PhoneNumber;
-
-            this.Address = Address;
-
-            this.zipCode = zipCode;
-
-            this.Email = Email;
-
-        }
-
-
-
-        public class Person
-
-        {
-
-            public string FirstName { get; set; }
-
-            public string LastName { get; set; }
-
-            public string PhoneNumber { get; set; }
-
-            public string Address { get; set; }
-
-            public string zipCode { get; set; }
-
-            public string Email { get; set; }
-
-        }
-
         static void Main(string[] args)
-
         {
-
-            contact person = new contact("divya", "singh", "1234", "seoni", "462003", "abcd@gmail.com");
-
-            Console.WriteLine("Enter Your First Name" + person.FirstName);
-
-            Console.WriteLine("Enter Your Last Name" + person.LastName);
-
-            Console.WriteLine("Enter PhoneNumber" + person.PhoneNumber);
-
-            Console.WriteLine("Enter Your Zipcode" + person.zipCode);
-
-            Console.WriteLine("Enter Your Email" + person.Email);
-
-
-
-
-
-        }
-
-        public void add()
-
-        {
-
-            Console.WriteLine("Would you like to  add a person in your Address Book? (add)");
-
-            string response = Console.ReadLine();
-
-            if (response.ToLower() == "add")
-
+            Console.WriteLine("Welcome to Address Book");
+            Console.WriteLine("========================");
+            Dictionary<string, ContactDetails> addressBook = new Dictionary<string, ContactDetails>();
+            Console.WriteLine("Enter\n" +
+                "1 : Add Contact Details To Address Book\n" +
+                "2 : Edit a Contact Detail\n" +
+                "3 : Delete a Contact Detail\n" +
+                "4 : Exit");
+            int choice = Int32.Parse(Console.ReadLine());
+            switch (choice)
             {
-
-                this.addToAddressBook();
-
+                case 1:
+                    AddContactDetails(ref addressBook);
+                    break;
+                case 2:
+                case 3:
+                case 4:
+                default:
+                    break;
             }
-
-            else
-
-            {
-
-                Console.WriteLine("Your must enter 'add' to continue");
-
-                this.add();
-
-            }
-
+            return;
         }
-
-        public void addToAddressBook()
-
+        static void AddContactDetails(ref Dictionary<string, ContactDetails> addressBook)
         {
-
-            Console.WriteLine("Enter the first name");
-
-            string FirstName = Console.ReadLine();
-
-
-
-            Console.WriteLine("Enter the last name");
-
-            string LastName = Console.ReadLine();
-
-
-
-            Console.WriteLine("Enter the phone number");
-
-            string PhoneNumber = Console.ReadLine();
-
-
-
-            Console.WriteLine("Enter the ZipCode");
-
-            string zipCode = Console.ReadLine();
-
-
-
-            Console.WriteLine("Enter the address");
-
-            string Address = Console.ReadLine();
-
-
-
-            Console.WriteLine("Enter the email address");
-
-            string Email = Console.ReadLine();
-
-
-
-            contact person = new contact(FirstName, LastName, PhoneNumber, zipCode, Address, Email);
-
-
-
-            Console.WriteLine("");
-
-            Console.WriteLine("We have added - " + person.FirstName + " " + person.LastName + " to the database");
-
-            Console.WriteLine("");
-
-
-
-
-
-            this.add();
-
-
-
+            ContactDetails contact = new ContactDetails();
+            Console.WriteLine("Enter\n");
+            Console.Write("First Name : ");
+            contact.FirstName = Console.ReadLine();
+            Console.Write("Last Name : ");
+            contact.LastName = Console.ReadLine();
+            Console.Write("City : ");
+            contact.City = Console.ReadLine();
+            Console.Write("State : ");
+            contact.State = Console.ReadLine();
+            Console.Write("Zip : ");
+            contact.Zip = Console.ReadLine();
+            Console.Write("Phone Number : ");
+            contact.PhoneNumber = Console.ReadLine();
+            Console.Write("Email : ");
+            contact.Email = Console.ReadLine();
+            addressBook.Add(contact.FirstName, contact);
+            return;
         }
-
-
-
     }
-
 }
