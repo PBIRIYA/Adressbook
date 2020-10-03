@@ -1,91 +1,132 @@
 ﻿using System;
-
-namespace AddressBookSystem
+using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
+namespace AddressBook
 {
-    class Program
+    class AddressBookMain
     {
         static void Main(string[] args)
         {
-            const string Console_Message = "Please select an option : \n1.Add Contact\n2.Edit existing Contact\n3.Delete existing Contact\n4.Quit\nEnter your option :";
-
-            Console.WriteLine("Welcome to Address Book System!");
-            //Adding a contact to contact book
-            var addressbook = new AddressBook();
-            addressbook.AddContact(new Contact("A", "Raja",
-                new Address("Bazar A", "Kolkata", "WB", 1452), "12345", "gmail.com"));
-            bool quit = false;
-            while (quit != true)
+            Console.WriteLine("Welcome to Address Book");
+            Console.WriteLine("========================");
+            Dictionary<string, ContactDetails> addressBook = new Dictionary<string, ContactDetails>();
+            bool exit = false;
+            int choice;
+            while (!exit)
             {
-                Console.Write(Console_Message);
-                var input = Convert.ToInt32(Console.ReadLine());
-                switch (input)
+                Console.WriteLine("Enter\n" +
+                "1 : Add Contact Details To Address Book\n" +
+                "2 : Edit a Contact Detail\n" +
+                "3 : Delete a Contact Detail\n" +
+                "4 : Exit");
+                choice = Int32.Parse(Console.ReadLine());
+                switch (choice)
                 {
                     case 1:
-                        var newContact = TakeInputForContact();
-                        addressbook.AddContact(newContact);
+                        AddContactDetails(ref addressBook);
                         break;
                     case 2:
-                        //Editing by using first name of the contact
-                        Console.Write("Enter the name of the person to edit contact details :");
-                        var firstName = Console.ReadLine();
-                        if (!addressbook.contacts.ContainsKey(firstName))
-                            Console.WriteLine("No record(s) found");
-                        else
-                        {
-                            var contactToEdit = addressbook.contacts[firstName];
-                            Console.WriteLine("################ The existing details are ############");
-                            DisplayContact(contactToEdit);
-                            Console.WriteLine("################ Enter the new details ############");
-                            var contact = TakeInputForContact();
-                            addressbook.EditContact(firstName, contact);
-                        }
+                        EditContactDetails(ref addressBook);
                         break;
                     case 3:
-                        //Deleting by using first name of the contact
-                        Console.Write("Enter the name of the person to edit contact details :");
-                        var firstNameToDelete = Console.ReadLine();
-                        addressbook.DeleteContact(firstNameToDelete);
+                        DeleteContactDetails(ref addressBook);
                         break;
                     case 4:
-                        quit = true;
+                        exit = true;
                         break;
                     default:
-                        Console.WriteLine("Invalid Input");
                         break;
                 }
             }
+            return;
         }
-        static Contact TakeInputForContact()
+        static void AddContactDetails(ref Dictionary<string, ContactDetails> addressBook)
         {
-            Console.Write("Enter First Name : ");
-            var firstName = Console.ReadLine();
-            Console.Write("Enter Last Name : ");
-            var lastName = Console.ReadLine();
-            Console.Write("Enter Address Line One : ");
-            var addressLineOne = Console.ReadLine();
-            Console.Write("Enter City : ");
-            var city = Console.ReadLine();
-            Console.Write("Enter State : ");
-            var state = Console.ReadLine();
-            Console.Write("Enter Zip : ");
-            var zip = Convert.ToInt32(Console.ReadLine());
-            Console.Write("Enter Phone No. : ");
-            var phoneNumber = Console.ReadLine();
-            Console.Write("Enter Email : ");
-            var email = Console.ReadLine();
-            var address = new Address(addressLineOne, city, state, zip);
-            return new Contact(firstName, lastName, address, phoneNumber, email);
+            ContactDetails contact = new ContactDetails();
+
+            Console.WriteLine("Enter\n");
+
+            Console.Write("First Name : ");
+            contact.FirstName = Console.ReadLine();
+            Console.Write("Last Name : ");
+            contact.LastName = Console.ReadLine();
+            Console.Write("City : ");
+            contact.City = Console.ReadLine();
+            Console.Write("State : ");
+            contact.State = Console.ReadLine();
+            Console.Write("Zip : ");
+            contact.Zip = Console.ReadLine();
+            Console.Write("Phone Number : ");
+            contact.PhoneNumber = Console.ReadLine();
+            Console.Write("Email : ");
+            contact.Email = Console.ReadLine();
+            Console.WriteLine();
+            addressBook.Add(contact.FirstName, contact);
+            return;
         }
-        static void DisplayContact(Contact contact)
+        static void EditContactDetails(ref Dictionary<string, ContactDetails> addressBook)
         {
-            Console.WriteLine(" First Name : {0}", contact.firstName);
-            Console.WriteLine(" Last Name : {0}", contact.lastName);
-            Console.WriteLine(" Address Line One : {0}", contact.address.addressLineOne);
-            Console.WriteLine(" City : {0}", contact.address.city);
-            Console.WriteLine(" State : {0}", contact.address.state);
-            Console.WriteLine(" Zip : {0}", contact.address.zip);
-            Console.WriteLine(" Phone No. : {0}", contact.phoneNumber);
-            Console.WriteLine(" Email : {0}", contact.email);
+            string name;
+            Console.WriteLine("Enter First Name whose details need to be edited ");
+            name = Console.ReadLine();
+            bool notCompleted = true;
+            int choice;
+            Console.WriteLine("Enter\n" +
+                    "1 : Edit City\n" +
+                    "2 : Edit State\n+" +
+                    "3 : Edit Zip\n" +
+                    "4 : Edit Phone Number\n" +
+                    "5 : Edit Email ID\n" +
+                    "0 : Edit Completed");
+            while (notCompleted)
+            {
+                choice = Int32.Parse(Console.ReadLine());
+                switch (choice)
+                {
+                    case 1:
+                        Console.Write("Edit Updated City :");
+                        addressBook[name].City = Console.ReadLine();
+                        break;
+                    case 2:
+                        Console.Write("Edit Updated State :");
+                        addressBook[name].State = Console.ReadLine();
+                        break;
+                    case 3:
+                        Console.Write("Edit Updated Zip :");
+                        addressBook[name].Zip = Console.ReadLine();
+                        break;
+                    case 4:
+                        Console.Write("Edit Updated Phone Number :");
+                        addressBook[name].PhoneNumber = Console.ReadLine();
+                        break;
+                    case 5:
+                        Console.Write("Edit Updated Email Id :");
+                        addressBook[name].State = Console.ReadLine();
+                        break;
+                    case 0:
+                        notCompleted = false;
+                        break;
+                    default:
+                        Console.WriteLine("Wrong Choice\nChoose Again");
+                        break;
+                }
+                Console.WriteLine("If there is anything else to edit, enter respective number\n" +
+                    "else enter 0 to exit");
+            }
+        }
+        static void DeleteContactDetails(ref Dictionary<string, ContactDetails> addressBook)
+        {
+            string name;
+            Console.WriteLine("Enter First Name whose details need to be deleted ");
+            name = Console.ReadLine();
+            if (addressBook.ContainsKey(name))
+            {
+                addressBook.Remove(name);
+                Console.WriteLine("Details of " + name + " deleted successfully");
+            }
+            else
+                Console.WriteLine("Details of " + name + " is not present");
+            return;
         }
     }
-    }
+}
