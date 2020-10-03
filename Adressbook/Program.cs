@@ -1,21 +1,23 @@
 ﻿using System;
-
+using AddContact;
 namespace AddressBookSystem
 {
     class Program
     {
+        static void AddContact()
+        {
+            Console.WriteLine("Add new contact");
+        }
         static void Main(string[] args)
         {
+            AddContact();
             const string Console_Message = "Please select an option : \n1.Add Contact\n2.Edit existing Contact\n3.Delete existing Contact\n4.Quit\nEnter your option :";
-
             Console.WriteLine("Welcome to Address Book System!");
             //Adding a contact to contact book
-            var addressbook = new AddressBook();
-            addressbook.AddContact(new Contact("A", "Raja",
-                new Address("Bazar A", "Kolkata", "WB", 1452), "12345", "gmail.com"));
-
+            var addressbook = new Program();
+            addressbook.AddContact(new .AddContact("A", "Raja"));
+            new AddressBookSystem("Bazar A", "Kolkata", "WB", 1452, "12345", "gmail.com");
             bool quit = false;
-
             while (quit != true)
             {
                 Console.Write(Console_Message);
@@ -57,43 +59,28 @@ namespace AddressBookSystem
                         break;
                 }
             }
-
-
-
-
-
         }
-
         static Contact TakeInputForContact()
         {
             Console.Write("Enter First Name : ");
             var firstName = Console.ReadLine();
-
             Console.Write("Enter Last Name : ");
             var lastName = Console.ReadLine();
-
             Console.Write("Enter Address Line One : ");
             var addressLineOne = Console.ReadLine();
-
             Console.Write("Enter City : ");
             var city = Console.ReadLine();
-
             Console.Write("Enter State : ");
             var state = Console.ReadLine();
-
             Console.Write("Enter Zip : ");
             var zip = Convert.ToInt32(Console.ReadLine());
-
             Console.Write("Enter Phone No. : ");
             var phoneNumber = Console.ReadLine();
-
             Console.Write("Enter Email : ");
             var email = Console.ReadLine();
-
             var address = new Address(addressLineOne, city, state, zip);
             return new Contact(firstName, lastName, address, phoneNumber, email);
         }
-
         static void DisplayContact(Contact contact)
         {
             Console.WriteLine(" First Name : {0}", contact.firstName);
@@ -105,8 +92,5 @@ namespace AddressBookSystem
             Console.WriteLine(" Phone No. : {0}", contact.phoneNumber);
             Console.WriteLine(" Email : {0}", contact.email);
         }
-
-
-
     }
 }
