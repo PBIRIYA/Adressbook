@@ -1,27 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-namespace AddressBook
+namespace AddressBookSystem
 {
     class Address
     {
-        string _city;
-        string _state;
-        string _zip;
-        public Address()
+        public string addressLineOne { get; set; }
+        public string city { get; set; }
+        public string state { get; set; }
+        public int zip { get; set; }
+        public Address(string addressLineOne, string city, string state, int zip)
         {
-            this.City = "";
-            this.State = "";
-            this.Zip = "";
+            this.addressLineOne = addressLineOne;
+            this.city = city;
+            this.state = state;
+            this.zip = zip;
         }
-        public Address(string City, string State, string Zip)
-        {
-            this.City = City;
-            this.State = State;
-            this.Zip = Zip;
-        }
-        public string City { get => _city; set => _city = value; }
-        public string State { get => _state; set => _state = value; }
-        public string Zip { get => _zip; set => _zip = value; }
     }
 }
