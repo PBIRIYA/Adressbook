@@ -1,78 +1,61 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-namespace AddressBook
+using System.Threading;
+
+namespace Addressbook
 {
     class Program
     {
+        public HashSet<Contact> ContactSet;
+        AddressBook book;
+        public Program()
+        {
+            ContactSet = new HashSet<Contact>();
+            book = new AddressBook();
+        }
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to Address Book");
-            Console.WriteLine("========================");
-            AddressBooks addressBooksCollection = new AddressBooks();
-            addressBooksCollection.Name = "General";
-            bool contAddressBook = true; ;
-            bool contContactPanel = true; ;
-            do
+            Program newProgram = new Program();
+            Console.WriteLine("Welcome to the Address Book Program!");
+            bool exist = true;
+            while (exist)
             {
-                Console.WriteLine("Enter\n" +
-                "1 : To Add a new Address Book\n" +
-                "2 : To use current address books ( " + addressBooksCollection.Name + " )\n" +
-                "3 : Switch Address Book\n" +
-                "0 : Exit");
-                int userChoice = Int32.Parse(Console.ReadLine());
-                switch (userChoice)
+                string bookInfo;
+                HashSet<Contact> ContactSet = new HashSet<Contact>();
+                Dictionary<string, HashSet<Contact>> Book = new Dictionary<string, HashSet<Contact>>();
+                Console.WriteLine("Enter New addressBook");
+                bookInfo = Console.ReadLine();
+                Console.WriteLine("Select the option. \n1. Add new contact. \n2. Edit existing contact. \n3. Delete existing contact. \n4.Exit");
+                int option = int.Parse(Console.ReadLine());
+                switch (option)
                 {
                     case 1:
-                        contContactPanel = true;
-                        Console.WriteLine("Add Name of the new Address Book");
-                        addressBooksCollection.Name = Console.ReadLine();
-                        break;
+                        {
+                            newProgram.book.AddPerson();
+                            Console.WriteLine("Contact added!");
+                            break;
+                        }
                     case 2:
-                        contContactPanel = true;
-                        break;
+                        {
+                            Console.WriteLine("Enter the first name of that person: ");
+                            newProgram.book.EditContactDetails();
+                            break;
+                        }
                     case 3:
-                        contContactPanel = true;
-                        Console.WriteLine("Enter Name of the Address Book you want to switch");
-                        addressBooksCollection.Name = Console.ReadLine();
-                        break;
-                    case 0:
-                        contAddressBook = false;
-                        contContactPanel = false;
-                        break;
-                    default:
-                        Console.WriteLine("Wrong Option Entered");
-                        break;
+                        {
+                            Console.WriteLine("Enter the first name of that Person:");
+                            newProgram.book.DeleteContactDetails();
+                            Console.WriteLine("count of Person:" + Book.Count);
+                            break;
+                        }
+                    case 4:
+                        {
+                            exist = false;
+                            break;
+                        }
                 }
-                int choice;
-                while (contContactPanel)
-                {
-                    Console.WriteLine("Enter\n" +
-                    "1 : Add Contact Details to " + addressBooksCollection.Name + " Address Book\n" +
-                    "2 : Edit a Contact Detail\n" +
-                    "3 : Delete a Contact Detail\n" +
-                    "4 : Exit");
-                    choice = Int32.Parse(Console.ReadLine());
-                    switch (choice)
-                    {
-                        case 1:
-                            addressBooksCollection.AddNewAddressBook();
-                            break;
-                        case 2:
-                            addressBooksCollection.EditDetailsInAddressBook();
-                            break;
-                        case 3:
-                            addressBooksCollection.DeleteOneContactDetail();
-                            break;
-                        case 4:
-                            contContactPanel = false;
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            } while (contAddressBook);
-            return;
+            }
         }
     }
 }

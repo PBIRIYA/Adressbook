@@ -1,42 +1,104 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-namespace AddressBook
+using System.Linq;
+using System.Collections;
+namespace Addressbook
 {
-    class AddressBooks
+    public class AddressBook
     {
-        string _name;
-        Dictionary<string, AddressBookMain> _multContactDetails = new Dictionary<string, AddressBookMain>();
-        public AddressBooks()
+        public HashSet<Contact> ContactSet = new HashSet<Contact>();
+        public ArrayList ContactList = new ArrayList();
+        List<Contact> Person = new List<Contact>();
+        HashSet<string> ContactName = new HashSet<string>();
+        public string FirstName { get; private set; }
+        public string LastName { get; private set; }
+        public void AddPerson()
         {
-            this._name = "General";
+            Contact contact = new Contact();
+            Console.Write("Enter First Name: ");
+            contact.FirstName = Console.ReadLine();
+            Console.Write("Enter Last Name: ");
+            contact.LastName = Console.ReadLine();
+            Console.Write("Enter Address : ");
+            contact.Address = Console.ReadLine();
+            Console.Write("Enter City : ");
+            contact.City = Console.ReadLine();
+            Console.Write("Enter State : ");
+            contact.State = Console.ReadLine();
+            Console.Write("Enter Zip Code : ");
+            contact.ZipCode = Console.ReadLine();
+            Console.Write("Enter Phone Number : ");
+            contact.Phone = Console.ReadLine();
+            Console.Write("Enter Email ID : ");
+            contact.Email = Console.ReadLine();
+            Person.Add(contact);
+            ContactSet.Add(contact);
+            ContactName.Add(contact.FirstName);
+            ContactName.Add(contact.LastName);
         }
-        public AddressBooks(string name)
+        public bool CheckDuplicate()
         {
-            this._name = name;
+            if (ContactName.Contains(FirstName) && ContactName.Contains(LastName))
+            {
+                Console.WriteLine("Contact details for this person already stored.");
+                return true;
+            }
+            else
+            {
+                ContactName.Add(FirstName);
+                ContactName.Add(LastName);
+                return false;
+            }
         }
-        public string Name { get => _name; set => _name = value; }
-        public void AddNewAddressBook()
+        public Contact FindPerson(string firstName)
         {
-            AddressBookMain addressBook = new AddressBookMain();
-            int numDetails;
-            Console.Write("Enter number of Contact Details you want to save : ");
-            numDetails = Int32.Parse(Console.ReadLine());
-            for (int i = 1; i <= numDetails; i++)
-                addressBook.AddContactDetails();
-            _multContactDetails.Add(this._name, addressBook);
+            Contact toFind = Person.Find((person) => person.FirstName == firstName);
+            return toFind;
         }
-        public void EditDetailsInAddressBook()
+        public void EditContactDetails()
         {
-            _multContactDetails[Name].EditContactDetails();
+            string firstName = Console.ReadLine();
+            Contact editContact = FindPerson(firstName);
+            if (editContact == null)
+            {
+                Console.WriteLine("Not Found :" + firstName);
+            }
+            else
+            {
+                Contact EditContactDetails = new Contact();
+                Console.Write("Enter First Name: ");
+                EditContactDetails.FirstName = Console.ReadLine();
+                Console.Write("Enter Last Name: ");
+                EditContactDetails.LastName = Console.ReadLine();
+                Console.Write("Enter Address : ");
+                EditContactDetails.Address = Console.ReadLine();
+                Console.Write("Enter City : ");
+                EditContactDetails.City = Console.ReadLine();
+                Console.Write("Enter State : ");
+                EditContactDetails.State = Console.ReadLine();
+                Console.Write("Enter Zip Code : ");
+                EditContactDetails.ZipCode = Console.ReadLine();
+                Console.Write("Enter Phone Number : ");
+                EditContactDetails.Phone = Console.ReadLine();
+                Console.Write("Enter Email ID : ");
+                EditContactDetails.Email = Console.ReadLine();
+            }
         }
-        public void DeleteOneContactDetail()
+        public void DeleteContactDetails()
         {
-            _multContactDetails[Name].DeleteContactDetails();
-        }
-        public void DisplayContactsInCurrentAddressBook()
-        {
-            _multContactDetails[Name].DisplayAllContacts();
+            string firstName = Console.ReadLine();
+            Contact deleteContact = FindPerson(firstName);
+            if (deleteContact == null)
+            {
+                Console.WriteLine("Not Found :" + firstName);
+            }
+            else
+            {
+                Person.Remove(deleteContact);
+                Console.WriteLine("delete Contact successfully", firstName);
+                ContactList.Remove(Person);
+            }
         }
     }
 }
