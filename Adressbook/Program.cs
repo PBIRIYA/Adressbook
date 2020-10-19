@@ -1,12 +1,61 @@
 ﻿using System;
-
-namespace Adressbook
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading;
+namespace Addressbook
 {
     class Program
     {
+        public HashSet<Contact> ContactSet;
+        AddressBook book;
+        public Program()
+        {
+            ContactSet = new HashSet<Contact>();
+            book = new AddressBook();
+        }
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome To Address Book");
+            Program newProgram = new Program();
+            Console.WriteLine("Welcome to the Address Book Program!");
+            bool exist = true;
+            while (exist)
+            {
+                string bookInfo;
+                HashSet<Contact> ContactSet = new HashSet<Contact>();
+                Dictionary<string, HashSet<Contact>> Book = new Dictionary<string, HashSet<Contact>>();
+
+                Console.WriteLine("Enter New addressBook");
+                bookInfo = Console.ReadLine();
+                Console.WriteLine("Select the option. \n1. Add new contact. \n2. Edit existing contact. \n3. Delete existing contact. \n4.Exit");
+                int option = int.Parse(Console.ReadLine());
+                switch (option)
+                {
+                    case 1:
+                        {
+                            newProgram.book.AddPerson();
+                            Console.WriteLine("Contact added!");
+                            break;
+                        }
+                    case 2:
+                        {
+                            Console.WriteLine("Enter the first name of that person: ");
+                            newProgram.book.EditContactDetails();
+                            break;
+                        }
+                    case 3:
+                        {
+                            Console.WriteLine("Enter the first name of that Person:");
+                            newProgram.book.DeleteContactDetails();
+                            Console.WriteLine("count of Person:" + Book.Count);
+                            break;
+                        }
+                    case 4:
+                        {
+                            exist = false;
+                            break;
+                        }
+                }
+            }
         }
     }
 }
