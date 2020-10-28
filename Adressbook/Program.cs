@@ -20,7 +20,7 @@ namespace AddressBookSystem
                 int loop = 1;
                 while (loop == 1)
                 {
-                    Console.WriteLine("\nSelect the option. \n1. Add new contact. \n2. Edit existing contact.\n3. Delete Contact \n4. Search By City \n5. Count citywise contacts \n6. Exit.");
+                    Console.WriteLine("\nSelect the option. \n1. Add new contact. \n2. Edit existing contact.\n3. Delete Contact \n4. Search By City \n5. Count citywise contacts \n6. Display Alphabetically \n7. Sort By Zipcode \n8. Sort By City \n9. Sort By State \n10. Exit.");
                     int option = int.Parse(Console.ReadLine());
                     switch (option)
                     {
@@ -94,6 +94,7 @@ namespace AddressBookSystem
                                 break;
                             }
                         case 4:
+                            binder.CreateDictionary();
                             Console.WriteLine("Enter city whose contacts need to be searched");
                             string city = Console.ReadLine();
                             foreach (Contact contact in binder.CityDictionary[city])
@@ -102,17 +103,29 @@ namespace AddressBookSystem
                             }
                             break;
                         case 5:
+                            binder.CreateDictionary();
                             foreach (var key in binder.CityDictionary.Keys)
                             {
                                 Console.WriteLine(key + "\t" + binder.CityDictionary[key].Count);
                             }
                             break;
                         case 6:
+                            book.AlphabeticallyArrange();
+                            break;
+                        case 7:
+                            book.SortByPincode();
+                            break;
+                        case 8:
+                            book.SortByCity();
+                            break;
+                        case 9:
+                            book.SortByState();
+                            break;
+                        case 10:
                             loop = 0;
                             break;
                     }
                     binder.Binder[addrName] = (book.People);
-                    binder.CreateDictionary();
                 }
                 Console.WriteLine("Do you want to enter an address book. \n1. yes \n2. no");
                 result = int.Parse(Console.ReadLine());
