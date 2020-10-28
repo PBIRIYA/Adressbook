@@ -1,0 +1,22 @@
+﻿[
+  {
+    "FirstName": "Priya",
+    "LastName": "Biriya",
+    "Address": "Ward no 5",
+    "City": "Nainpur",
+    "State": "MP",
+    "ZipCode": "481776",
+    "PhoneNumber": "91-7415657265",
+    "Email": "abcdefgh@gmail.com"
+  },
+  {
+    "FirstName": "Neelu",
+    "LastName": "Biriya",
+    "Address": "Ward no 5",
+    "City": "Nainpur",
+    "State": "MP",
+    "ZipCode": "481776",
+    "PhoneNumber": "91-9039571119",
+    "Email": "abcdefghij@gmail.com"
+  }
+]
