@@ -1,11 +1,14 @@
-﻿using System;
+﻿using CsvHelper;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-
+using System.Text;
 namespace AddressBookSystem
 {
     class Program
     {
+        public static List<Contact> data1 = new List<Contact>();
         static void Main(string[] args)
         {
             AddressBookBinder binder = new AddressBookBinder();
@@ -132,12 +135,16 @@ namespace AddressBookSystem
             }
             foreach (var key in binder.Binder.Keys)
             {
-                Console.WriteLine(key);
                 foreach (Contact c in binder.Binder[key])
                 {
-                    Console.WriteLine(c.FirstName + "\t" + c.LastName + "\t" + c.Address + "\t" + c.City + "\t" + c.State + "\t" + c.ZipCode + "\t" + c.PhoneNumber + "\t" + c.Email);
+                    data1.Add(c);
                 }
             }
+            Console.WriteLine("Writing contacts in file");
+            ReadWrite.WriteUsingStreamWriter(data1);
+            ReadWrite.ReadFromStreamReader();
+            ReadWrite.ImplementCSVDataHandling();
+            ReadWrite.WriteCSVFile(data1);
         }
     }
 }

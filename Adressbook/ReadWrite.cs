@@ -1,5 +1,7 @@
-﻿using System;
+﻿using CsvHelper;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -27,7 +29,7 @@ namespace AddressBookSystem
         }
         public static void WriteUsingStreamWriter(List<string> data)
         {
-            string path = @"C:\Users\Administrator\Desktop\BridgeLabz Practice\23. AddressBook\AddressBook\AddressBookSystem\Contacts.txt";
+            string path = @"D:\Adressbook\Adressbook\Adressbook\ReadWrite.cs";
             if (File.Exists(path))
             {
                 using (StreamWriter streamWriter = File.AppendText(path))
@@ -43,6 +45,38 @@ namespace AddressBookSystem
             else
             {
                 Console.WriteLine("No file");
+            }
+        }
+        public static void ImplementCSVDataHandling()
+        {
+            string filePath = @"C:\Users\Administrator\Desktop\BridgeLabz Practice\23. AddressBook\AddressBook\AddressBookSystem\Utility\Contact.csv";
+            using (var reader = new StreamReader(filePath))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                var records = csv.GetRecords<Contact>().ToList();
+                Console.WriteLine("Data Reading done successfully from Contact.csv file");
+                foreach (Contact contact in records)
+                {
+                    Console.Write("\t" + contact.FirstName);
+                    Console.Write("\t" + contact.LastName);
+                    Console.Write("\t" + contact.Address);
+                    Console.Write("\t" + contact.City);
+                    Console.Write("\t" + contact.State);
+                    Console.Write("\t" + contact.ZipCode);
+                    Console.Write("\t" + contact.PhoneNumber);
+                    Console.Write("\t" + contact.Email);
+                    Console.Write("\n");
+                }
+            }
+        }
+        public static void WriteCSVFile(List<Contact> data)
+        {
+            string filePath = @"C:\Users\Administrator\Desktop\BridgeLabz Practice\23. AddressBook\AddressBook\AddressBookSystem\Utility\Contact.csv";
+            using (var writer = new StreamWriter(filePath))
+            using (var csvWrite = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                Console.WriteLine("Data Writing done successfully from Contact.csv file");
+                csvWrite.WriteRecords(data);
             }
         }
     }
