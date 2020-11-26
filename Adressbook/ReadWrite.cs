@@ -13,7 +13,7 @@
         //Reading a txt file
         public static void ReadFromStreamReader()
         {
-            string path = @"C:\Users\Administrator\Desktop\BridgeLabz Practice\23. AddressBook\AddressBook\AddressBookSystem\Utility\Contacts.txt";
+            string path = @"D:\Adressbook\Adressbook\Adressbook\Utility\Contacts.txt";
             if (File.Exists(path))
             {
                 using (StreamReader streamReader = File.OpenText(path))
